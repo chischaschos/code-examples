@@ -5,7 +5,11 @@
 
 # Running the application
 
+* Install coffee script:
+
+    brew install coffee-script
+
 * Clone the repo
 * Execute:
 
-    ruby ex1.rb
+    bundle exec shotgun ex1.rb
