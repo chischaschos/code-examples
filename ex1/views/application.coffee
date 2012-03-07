@@ -1,4 +1,10 @@
 $ ->
+  window.CurrencyModel = Backbone.Model.extend
+    defaults:
+      id: ''
+      currency_name: 'USD'
+      rate: 1
+
   window.CurrencyRateView = Backbone.View.extend
     tagName: 'tr'
 
@@ -10,7 +16,10 @@ $ ->
       @
 
   # Passing a single object to extend in order to avoid precedence errors
-  window.CurrencyRatesCollection = Backbone.Collection.extend {}
+  window.CurrencyRatesCollection = Backbone.Collection.extend
+    model: CurrencyModel
+
+    url: '/rates'
 
   window.currencyRates = new CurrencyRatesCollection
 
@@ -34,4 +43,15 @@ $ ->
       # CurrencyRateView instance rendered el elements
       @$el.append currencyRateView.render().el
 
+  window.ToolBarView = Backbone.View.extend
+    el: '.navbar .container'
+
+    events:
+      'click #refresh': "refreshRates"
+
+     refreshRates: ->
+       currencyRates.fetch()
+
+
+  window.toolBarView = new ToolBarView
   window.currencyRatesView = new CurrencyRatesView

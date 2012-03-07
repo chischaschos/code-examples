@@ -4,21 +4,23 @@
     %title Backbone example 1
     %link{href: "bootstrap/css/bootstrap.min.css", rel: "stylesheet"}
   %body
+    = haml :_nav_bar
+
     #container
-      %table#rates
+      %table#rates.table.table-striped.table-condensed.table-bordered
         %thead
           %th Currency Name
           %th Rate
         %tbody
 
-  = haml :_rate
+    = haml :_rate
 
-  %script{type: "text/javascript", src: "javascripts/jquery-1.7.1.min.js"}
-  %script{type: "text/javascript", src: "javascripts/underscore-min.js"}
-  %script{type: "text/javascript", src: "javascripts/handlebars-1.0.0.beta.6.js"}
-  %script{type: "text/javascript", src: "javascripts/backbone-min.js"}
-  %script{type: "text/javascript", src: "application.js"}
-  :javascript
-    $(function() {
-      currencyRates.reset( #{rates.to_json} )
-    })
+    %script{type: "text/javascript", src: "javascripts/jquery-1.7.1.min.js"}
+    %script{type: "text/javascript", src: "javascripts/underscore-min.js"}
+    %script{type: "text/javascript", src: "javascripts/handlebars-1.0.0.beta.6.js"}
+    %script{type: "text/javascript", src: "javascripts/backbone-min.js"}
+    %script{type: "text/javascript", src: "application.js"}
+    :javascript
+      $(function() {
+        currencyRates.reset( #{rates.to_json} )
+      })
