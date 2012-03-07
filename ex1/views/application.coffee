@@ -1,10 +1,12 @@
 $ ->
   window.CurrencyRateView = Backbone.View.extend
-    # By no providing an el element it will default to an empty div
+    tagName: 'tr'
+
+    template: Handlebars.compile $('#rate_template').html()
 
     # Properties must be retrieved using get method so callbacks may be triggered
     render: ->
-      @$el.html @model.get('currency_name')
+      @$el.html @template(@model.attributes)
       @
 
   # Passing a single object to extend in order to avoid precedence errors
@@ -14,15 +16,15 @@ $ ->
 
   window.CurrencyRatesView = Backbone.View.extend
     # By creating an el element it will contain our the app
-    el: 'body'
+    el: 'table#rates tbody'
 
     initialize: ->
-      # Third parameter is context, so I´m passing @(this) so I can keep
+      # Third parameter is context, so I'm passing @(this) so I can keep
       # the CurrencyRatesView reference
       currencyRates.bind 'reset', @addAll, @
 
     addAll: ->
-      # Secong parameter is context, so I´m passing @(this) so I can keep the
+      # Secong parameter is context, so I'm passing @(this) so I can keep the
       # CurrencyRatesView reference
       currencyRates.each @addOne, @
 
