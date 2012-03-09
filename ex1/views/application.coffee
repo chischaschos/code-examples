@@ -1,10 +1,4 @@
 $ ->
-  window.CurrencyModel = Backbone.Model.extend
-    defaults:
-      id: ''
-      currency_name: 'USD'
-      rate: 1
-
   window.CurrencyRateView = Backbone.View.extend
     tagName: 'tr'
 
@@ -15,27 +9,26 @@ $ ->
       @$el.html @template(@model.attributes)
       @
 
+
   # Passing a single object to extend in order to avoid precedence errors
   window.CurrencyRatesCollection = Backbone.Collection.extend
-    model: CurrencyModel
-
     url: '/rates'
 
-  window.currencyRates = new CurrencyRatesCollection
 
   window.CurrencyRatesView = Backbone.View.extend
     # By creating an el element it will contain our the app
     el: 'table#rates tbody'
 
     initialize: ->
+      @currencyRates =  @options.currencyRates
       # Third parameter is context, so I'm passing @(this) so I can keep
       # the CurrencyRatesView reference
-      currencyRates.bind 'reset', @addAll, @
+      @currencyRates.bind 'reset', @addAll, @
 
     addAll: ->
       # Secong parameter is context, so I'm passing @(this) so I can keep the
       # CurrencyRatesView reference
-      currencyRates.each @addOne, @
+      @currencyRates.each @addOne, @
 
     addOne: (currencyRate) ->
       currencyRateView = new CurrencyRateView model: currencyRate
@@ -43,15 +36,28 @@ $ ->
       # CurrencyRateView instance rendered el elements
       @$el.append currencyRateView.render().el
 
+    render: ->
+      @$el.html('')
+      @currencyRates.fetch()
+
+
   window.ToolBarView = Backbone.View.extend
     el: '.navbar .container'
+
+    initialize: ->
+      @currencyRatesView =  @options.currencyRatesView
 
     events:
       'click #refresh': "refreshRates"
 
-     refreshRates: ->
-       currencyRates.fetch()
+    refreshRates: ->
+      @currencyRatesView.render()
 
+
+  window.currencyRates = new CurrencyRatesCollection
+
+  window.currencyRatesView = new CurrencyRatesView
+    currencyRates: currencyRates
 
   window.toolBarView = new ToolBarView
-  window.currencyRatesView = new CurrencyRatesView
+    currencyRatesView: currencyRatesView
