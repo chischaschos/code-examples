@@ -1,6 +1,17 @@
 $ ->
-  window.CommentModel = Backbone.Model.extend
-    url: '/comments'
+  window.CommentModel = Backbone.Model.extend {}
+
+  window.CommentsCollection = Backbone.Collection.extend {}
+
+  window.QuestionModel = Backbone.Model.extend
+    initialize: ->
+      @comments = new CommentsCollection
+      @comments.url = "/questions/#{@id}/comments"
+      @comments.fetch()
+
+    attributesWithComments: ->
+      @set 'comments', @comments.map (comment) ->
+        comment.get('text')
 
   window.QuestionShowView = Backbone.View.extend
     el: '#current_question'
@@ -20,7 +31,7 @@ $ ->
       questionsView.$el.fadeIn()
 
     render: ->
-      @$el.html @template(@model.attributes)
+      @$el.html @template(@model.attributesWithComments().toJSON())
       @$el.fadeIn()
       @
 
@@ -61,8 +72,7 @@ $ ->
 
   window.QuestionsCollection = Backbone.Collection.extend
     url: '/questions'
-
-
+    model: QuestionModel
 
 
   window.questionsCollection = new QuestionsCollection

@@ -1,7 +1,8 @@
 source :gemcutter
 
 gem 'sinatra'
-gem 'redis'
 gem 'haml'
 gem 'shotgun'
 gem 'coffee-script'
+gem 'dm-redis-adapter'
+gem 'dm-serializer'
