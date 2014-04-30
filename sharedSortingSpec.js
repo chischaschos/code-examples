@@ -43,4 +43,18 @@ module.exports = function(name, context) {
     expect(utils.isSorted(bigArray)).toBeTruthy();
   });
 
+  it (name + ' sorts descending sets', function() {
+    var bigArray = [];
+    for (var index = 5000; index > 0; index--) {
+      bigArray.push(index);
+    }
+
+    var startTime = new Date;
+    context.sort(bigArray);
+    var endTime = new Date;
+    console.log(' [x] Sorting ' + bigArray.length + ' descending sets with ' + name + ' in ' + (endTime - startTime) / 1000 + ' secs');
+
+    expect(utils.isSorted(bigArray)).toBeTruthy();
+  });
+
 }
