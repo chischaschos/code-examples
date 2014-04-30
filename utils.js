@@ -38,8 +38,22 @@ var isSorted = function(elements) {
   return result;
 };
 
+var exchange = function(elements, from, to) {
+  var fromElement = elements[from];
+  var toElement = elements[to];
+
+  elements[to] = fromElement;
+  elements[from] = toElement;
+};
+
+var isLess = function(elements, base, versus) {
+  return elements[base] < elements[versus];
+}
+
 module.exports.random = random;
 module.exports.shuffle = shuffle;
 module.exports.createArray = createArray;
 module.exports.isSorted = isSorted;
+module.exports.exchange = exchange;
+module.exports.isLess = isLess;
 

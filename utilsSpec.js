@@ -25,4 +25,16 @@ describe ('utils', function() {
     expect(utils.isSorted(createdArray)).toBeTruthy();
     expect(utils.isSorted([ 9, 1 ])).toBeFalsy();
   });
+
+  it ('should exchange two elements in an array', function() {
+    var myArray = [ 1, 2 ];
+    utils.exchange(myArray, 0, 1);
+    expect(myArray).toEqual([ 2, 1 ]);
+  });
+
+  it ('should check is an element is less than other within an array', function() {
+    var myArray = [ 1, 2 ];
+    expect(utils.isLess(myArray, 0, 1)).toBeTruthy();
+  });
+
 });
