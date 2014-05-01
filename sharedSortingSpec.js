@@ -11,8 +11,14 @@ module.exports = function(name, context) {
     sorted = context.sort([ 3, 1 ]);
     expect(sorted).toEqual([ 1, 3 ]);
 
+    sorted = context.sort([ 9, 2, 3 ,1, 0 ]);
+    expect(sorted).toEqual([ 0, 1, 2, 3, 9 ]);
+
     sorted = context.sort([ 9, 1, 3 ,1, 0 ]);
     expect(sorted).toEqual([ 0, 1, 1, 3, 9 ]);
+
+    sorted = context.sort([ 2, 1, 3 ,1, 0 ]);
+    expect(sorted).toEqual([ 0, 1, 1, 2, 3 ]);
   });
 
   it (name + ' sorts bigger random numbers sets', function() {

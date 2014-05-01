@@ -3,14 +3,8 @@ var random = function random(max) {
 }
 
 var shuffle = function(elements) {
-  for (var index = 0; index < elements.length; index++) {
-    var myRandom = random(index);
-    var currentElement = elements[index];
-    var currentRandom = elements[myRandom];
-
-    elements[index] = currentRandom;
-    elements[myRandom] = currentElement;
-  }
+  for (var index = 0; index < elements.length; index++)
+    exchange(elements, random(index), index);
 
   return elements;
 }
