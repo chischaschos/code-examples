@@ -8,7 +8,7 @@ function partition(elements, loi, hii) {
   var storeIndex = loi;
 
   for (var leftIndex = loi; leftIndex < hii; leftIndex++) {
-    if (elements[leftIndex] <= elements[hii]) {
+    if (utils.isLess(elements, leftIndex, hii)) {
       utils.exchange(elements, leftIndex, storeIndex);
       storeIndex++;
     }
