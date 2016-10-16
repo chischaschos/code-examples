@@ -1,0 +1,72 @@
+<html>
+  <head>
+    <title>Collisions</title>
+  </head>
+  <body>
+    <canvas id='myCanvas' width='200' height='200'style='border:1px solid #000000;'></canvas>
+
+    <script>
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+      var redrawTime = 100;
+
+      function Figure(context, startingX, startingY) {
+        this.x = startingX;
+        this.y = startingY;
+        this.xGrades = 0;
+        this.yGrades = 0;
+        this.context = context;
+        this.stepSize = 5;
+        this.grades = 0;
+      }
+
+      Figure.prototype.place = function(x, y) {
+        this.x = x;
+        this.y = y;
+
+        this.context.fillStyle = '#ff0000';
+        this.context.fillRect(this.x, this.y, 10, 10);
+      };
+
+      Figure.prototype.walk = function(grades) {
+        if (grades) {
+          this.xGrades = grades;
+          this.yGrades = grades;
+        }
+
+        var sign = this.xGrades ? this.xGrades < 0 ? -1 : 1: 0;
+        var nextX = (Math.round(this.stepSize * Math.cos(this.xGrades)) * sign) + this.x;
+        var nextY = Math.round(this.stepSize * Math.sin(this.yGrades)) + this.y;
+
+        if (nextX < 0 || nextX > 190) {
+          this.xGrades *= -1;
+          nextX = (Math.round(this.stepSize * Math.cos(this.xGrades)) * sign) + this.x;
+        }
+
+        if (nextY < 0 || nextY > 190) {
+          this.yGrades *= -1;
+          nextY = Math.round(this.stepSize * Math.sin(this.yGrades)) + this.y;
+        }
+
+        this.place(nextX, nextY);
+      };
+
+      var figures = [];
+
+      for(var i = 0; i < 20; i++) {
+        var figure = new Figure(context, Math.round(Math.random() * 200), Math.round(Math.random() * 200));
+        figure.walk(Math.round(Math.random() * 360 + 1));
+        figures.push(figure);
+      }
+
+      setInterval(function() {
+        context.clearRect(0, 0, 200, 200);
+
+        figures.forEach(function(figure) {
+          figure.walk();
+        });
+      }, redrawTime);
+
+    </script>
+  </body>
+</html>
