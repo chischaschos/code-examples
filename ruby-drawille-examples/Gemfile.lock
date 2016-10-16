@@ -1,0 +1,15 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    curses (1.0.2)
+    drawille (0.3.3)
+      curses
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  drawille
+
+BUNDLED WITH
+   1.12.5
