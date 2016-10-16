@@ -1,0 +1,10 @@
+%script{id: "question-show-template", type: "text/x-handlebars-template"}
+  %h1 {{name}}
+  %p {{description}}
+  %input{type: :text, class: 'new_comment', name: 'new_comment'}
+  %input{type: :button, class: :submit, value: 'Add comment'}
+  %ul
+    {{#each comments}}
+    %li {{ this }}
+    {{/each}}
+  %a.back{href: '#'} Back

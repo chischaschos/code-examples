@@ -1,0 +1,8 @@
+source :gemcutter
+
+gem 'sinatra'
+gem 'haml'
+gem 'coffee-script'
+gem 'shotgun'
+gem 'redis'
+gem 'yajl-ruby'
