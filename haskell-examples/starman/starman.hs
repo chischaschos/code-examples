@@ -1,3 +1,22 @@
+-- https://www.schoolofhaskell.com/school/starting-with-haskell/libraries-and-frameworks/randoms
+-- https://wiki.haskell.org/Tutorials/Programming_Haskell/String_IO
+-- https://en.wikibooks.org/wiki/Haskell/do_notation
+-- http://blog.sigfpe.com/2007/11/io-monad-for-people-who-simply-dont.html
+
+import System.Random
+
+getIndex :: Int -> IO Int
+getIndex max = getStdRandom (randomR (0, max - 1))
+
+file :: IO String
+file = do
+  c <- readFile "dictionary.txt"
+  let rows = lines c
+  let rowsNum = length rows
+  index <- getIndex(rowsNum)
+  let word = rows !! index
+  return word
+
 check :: String -> String -> Char -> (Bool,String)
 check word display guess
   = (elem guess word, [
@@ -23,3 +42,7 @@ mkguess word display n =
 
 starman :: String -> Int -> IO ()
 starman word n = turn word ['-' | x <- word] n
+
+main = do
+  word <- file
+  starman word 5
