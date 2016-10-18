@@ -6,16 +6,14 @@
 import System.Random
 
 getIndex :: Int -> IO Int
-getIndex max = getStdRandom (randomR (0, max - 1))
+getIndex max = getStdRandom . randomR (0, max - 1)
 
 file :: IO String
 file = do
   c <- readFile "dictionary.txt"
   let rows = lines c
-  let rowsNum = length rows
-  index <- getIndex(rowsNum)
-  let word = rows !! index
-  return word
+  let rowsNum = length . lines c
+  return rows . !! . getIndex rowsNum
 
 check :: String -> String -> Char -> (Bool,String)
 check word display guess
