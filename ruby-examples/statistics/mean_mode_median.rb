@@ -4,17 +4,17 @@
 #
 # Usage:
 #
-# $ echo "10 \n64630 11735 14216 99233 14470 4978 73429 38120 51135 67060"|ruby mean-mode-median.rb
+# $ echo "10 \n64630 11735 14216 99233 14470 4978 73429 38120 51135 67060"|ruby mean_mode_median.rb
 #
 # TODO: https://www.quora.com/What-is-the-most-efficient-algorithm-for-calculating-the-mode-of-an-array-of-integers
 
 class Array
   def mean
-    map(&:to_i).sort.reduce(&:+) / size.to_f
+    reduce(&:+) / size.to_f
   end
 
   def median
-    sorted_nums = map(&:to_i).sort
+    sorted_nums = sort
     mid_index = (size / 2).floor - 1
     mid_nums = if size.odd?
                  [sorted_nums[mid_index + 1], sorted_nums[mid_index + 1]]
@@ -25,11 +25,10 @@ class Array
   end
 
   def mode
-    sorted_nums = map(&:to_i).sort
     largest_occurrence = 1
     histogram = Hash.new(0)
 
-    occurrences = sorted_nums.each_with_object(histogram) do |e, h|
+    occurrences = self.each_with_object(histogram) do |e, h|
       h[e] += 1
       largest_occurrence = h[e] if h[e] > largest_occurrence
       h
@@ -40,9 +39,9 @@ class Array
   end
 end
 
-_ = gets.strip.to_i
-nums = gets.strip.split
+_ = gets
+nums = gets.strip.split.map(&:to_f)
 
-puts nums.mean
+puts nums.mean.round(1)
 puts nums.median
 puts nums.mode
