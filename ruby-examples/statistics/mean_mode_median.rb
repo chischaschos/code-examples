@@ -15,13 +15,11 @@ class Array
 
   def median
     sorted_nums = sort
-    mid_index = (size / 2).floor - 1
-    mid_nums = if size.odd?
-                 [sorted_nums[mid_index + 1], sorted_nums[mid_index + 1]]
-               else
-                 [sorted_nums[mid_index], sorted_nums[mid_index + 1]]
-               end
-    mid_nums.reduce(&:+) / 2.0
+    if size.odd?
+      sorted_nums[((size + 1) / 2) - 1]
+    else
+      (sorted_nums[(size / 2) - 1] + sorted_nums[size / 2]) / 2.0
+    end
   end
 
   def mode
