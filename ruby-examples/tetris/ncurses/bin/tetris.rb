@@ -2,8 +2,11 @@ require 'bundler'
 
 Bundler.require
 
-require_relative 'frame'
-require_relative 'loop'
+lib_path = File.realpath(File.dirname(__FILE__) + '/../lib')
+$LOAD_PATH.unshift(lib_path)
+
+require 'frame'
+require 'loop'
 
 def onsig(sig)
   Curses::close_screen
@@ -18,6 +21,10 @@ end
 
 
 def add_borders(frame)
+  (0..15).each do |h|
+    frame.set(h, 0)
+    frame.set(h, 40)
+  end
 
 end
 
