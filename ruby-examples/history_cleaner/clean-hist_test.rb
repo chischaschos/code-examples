@@ -56,4 +56,10 @@ class CleanHistTest < Minitest::Test
     assert_equal(data.first, clean_hist.lines.first)
     assert_equal(data[1] + data[2], clean_hist.lines.last)
   end
+
+  def test_encode_and_replace_non_define_character_sequences
+    clean_hist = CleanHist.new("hi \255")
+
+    -> { clean_hist.lines }.must_raise RuntimeError
+  end
 end
