@@ -37,7 +37,7 @@ class Vector(object):
         # pdb.set_trace()
         return self.__class__(
                 map(
-                    (lambda x: round(x * v)), self.coordinates
+                    (lambda x: round(x * v, 3)), self.coordinates
             ))
 
     def magnitude(self):
@@ -45,7 +45,7 @@ class Vector(object):
         return round(math.sqrt(sv_sum), 3)
 
     def normalize(self):
-        return self * (1 / self.magnitude())
+        return self * (1.0 / self.magnitude())
 
 # a = [1, 2, 3]
 # print (lambda x: x[0] - x[1])(a)

@@ -1,3 +1,4 @@
+import pdb
 import unittest
 import math
 import vector as v
@@ -42,16 +43,20 @@ class TestVector(unittest.TestCase):
 
     def test_normalize1(self):
         v1 = v.Vector([1.996, 3.108, -4.554])
-        self.assertEqual(v1.normalize(), v.Vector([0, 1, -1]), "normalized vector %r" % str(v1.normalize()))
+        self.assertEqual(v1.normalize(), v.Vector([0.34, 0.53, -0.777]), "normalized vector %r" % str(v1.normalize()))
 
     def test_normalize2(self):
         v1 = v.Vector([5.581, -2.136])
-        self.assertEqual(v1.normalize(), v.Vector([1, 0]), "normalized vector %r" % str(v1.normalize()))
+        self.assertEqual(v1.normalize(), v.Vector([0.934, -0.357]), "normalized vector %r" % str(v1.normalize()))
 
     def test_normalize3(self):
+        # pdb.set_trace()
         v1 = v.Vector([-1, 1, 1])
+        v1_normalized = v1.normalize()
         sqrt3 = round(math.sqrt(3), 3)
-        self.assertEqual(v1.normalize(), v.Vector([-1 / sqrt3, 1 / sqrt3, 1 / sqrt3]), "normalized vector %r" % str(v1.normalize()))
+        expected_vector = v.Vector([round(-1 / sqrt3, 3), round(1 / sqrt3, 3), round(1 / sqrt3, 3)])
+        self.assertEqual(v1_normalized, expected_vector,
+                "vector {} != {}".format(str(v1_normalized), str(expected_vector)))
 
 if __name__ == '__main__':
     unittest.main()
