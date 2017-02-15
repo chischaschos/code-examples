@@ -52,11 +52,25 @@ class TestVector(unittest.TestCase):
     def test_normalize3(self):
         # pdb.set_trace()
         v1 = v.Vector([-1, 1, 1])
+
         v1_normalized = v1.normalize()
         sqrt3 = round(math.sqrt(3), 3)
         expected_vector = v.Vector([round(-1 / sqrt3, 3), round(1 / sqrt3, 3), round(1 / sqrt3, 3)])
+
         self.assertEqual(v1_normalized, expected_vector,
                 "vector {} != {}".format(str(v1_normalized), str(expected_vector)))
+
+    def test_dot_product(self):
+        v1 = v.Vector([2, 2])
+        v2 = v.Vector([4, 4])
+
+        self.assertEqual(v1.dot_product(v2), 16)
+
+    # def test_dot_product(self):
+    #     v = v.Vector([7.887, 4.138])
+    #     w = v.Vector([-8.802, 6.776])
+
+
 
 if __name__ == '__main__':
     unittest.main()

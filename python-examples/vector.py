@@ -1,5 +1,6 @@
 import pdb
 import math
+
 # https://docs.python.org/3/reference/datamodel.html#emulating-numeric-types
 
 class Vector(object):
@@ -46,6 +47,9 @@ class Vector(object):
 
     def normalize(self):
         return self * (1.0 / self.magnitude())
+
+    def dot_product(self, v):
+        return sum([a * b for a, b in zip(self.coordinates, v.coordinates)])
 
 # a = [1, 2, 3]
 # print (lambda x: x[0] - x[1])(a)
