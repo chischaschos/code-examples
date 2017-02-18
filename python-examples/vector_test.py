@@ -66,10 +66,11 @@ class TestVector(unittest.TestCase):
 
         self.assertEqual(v1.dot_product(v2), 16)
 
-    # def test_dot_product(self):
-    #     v = v.Vector([7.887, 4.138])
-    #     w = v.Vector([-8.802, 6.776])
+    def test_angle_with(self):
+        v1 = v.Vector([1, 1])
+        v2 = v.Vector([1, -1])
 
+        self.assertEqual(v1.angle_with(v2), 90)
 
 
 if __name__ == '__main__':

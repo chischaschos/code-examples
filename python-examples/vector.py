@@ -38,18 +38,27 @@ class Vector(object):
         # pdb.set_trace()
         return self.__class__(
                 map(
-                    (lambda x: round(x * v, 3)), self.coordinates
+                    (lambda x: x * v), self.coordinates
             ))
 
     def magnitude(self):
         sv_sum = sum(map((lambda x: x ** 2), self.coordinates))
-        return round(math.sqrt(sv_sum), 3)
+        return math.sqrt(sv_sum)
 
     def normalize(self):
         return self * (1.0 / self.magnitude())
 
     def dot_product(self, v):
-        return sum([a * b for a, b in zip(self.coordinates, v.coordinates)])
+        products = [a * b for a, b in zip(self.coordinates, v.coordinates)]
+        return sum(products)
 
-# a = [1, 2, 3]
-# print (lambda x: x[0] - x[1])(a)
+    def angle_with(self, v):
+        return math.acos(self.normalize().dot_product(v.normalize()))
+
+
+a = Vector([7.35, 0.221, 5.188])
+b = Vector([2.751, 8.259, 3.985])
+print(a.angle_with(b))
+a = Vector([3.183, -7.627])
+b = Vector([-2.668, 5.319])
+print(a.angle_with(b))
