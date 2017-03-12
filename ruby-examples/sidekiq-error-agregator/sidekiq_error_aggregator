@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+# echo "askdjfalksdjfks, 2324" | awk '{print substr($0, 1, 3)}'
+
+
+ENV['REDIS_HOST'] = ''
+ENV['MEMCACHED_NODES'] = ''
+ENV['RAILS_ENV'] = ''
+
+require_relative '../config/application'
+
+ds = Sidekiq::DeadSet.new
+
+
+
+lines = File.readlines('./sidekiq_errors.txt')
+
+agg_lines = Hash.new {|h, k| h[k] = 0 }
+
+lines.each do |line|
+  if line =~ /Recommendations/
+    agg_lines[line[0..77]] += 1
+  else
+    agg_lines[line[0..55]] += 1
+  end
+end
+
+agg_lines.each do |k, v|
+  puts "#{v}, #{v/lines.size.to_f * 100} #{k}"
+end
+
