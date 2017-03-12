@@ -5,13 +5,26 @@ self.right (the right child of the node)
 self.data (the value of the node)
 """
 
-visited = dict()
+
 def preOrder(node):
     if node is None:
         return
-
-    visited[node.data] = True
     print(node.data, end=' ')
     preOrder(node.left)
     preOrder(node.right)
 
+
+def inOrder(node):
+    if node is None:
+        return
+    preOrder(node.left)
+    print(node.data, end=' ')
+    preOrder(node.right)
+
+
+def postOrder(node):
+    if node is None:
+        return
+    preOrder(node.left)
+    preOrder(node.right)
+    print(node.data, end=' ')
