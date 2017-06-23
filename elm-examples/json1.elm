@@ -5,6 +5,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Http
 import Json.Decode as Decode
+import Maybe exposing (Maybe)
 import Result exposing (Result)
 
 
@@ -19,14 +20,7 @@ main =
 
 init : ( Model, Cmd Msg )
 init =
-    ( buildModel, Cmd.none )
-
-
-
--- init =
---     ( "none"
---     , goFetchJSON
---     )
+    ( buildModel Nothing, goFetchJSON )
 
 
 jsonString =
@@ -67,19 +61,31 @@ dataSetURL =
     "https://data.cityofnewyork.us/api/views/5t4n-d72c/rows.json?accessType=DOWNLOAD"
 
 
+reportDecoder : Decode.Decoder Report
+reportDecoder =
+    Decode.map
+        Report
+        (Decode.field "meta" (Decode.field "view" (Decode.field "name" Decode.string)))
 
--- parseJSON : string -> Model
--- HTTP
--- goFetchJSON : Cmd Msg
--- goFetchJSON =
---     Http.send Parsed
---         (Http.get dataSetURL parseJSON)
+
+goFetchJSON : Cmd Msg
+goFetchJSON =
+    Http.send Parsed
+        (Http.get dataSetURL reportDecoder)
+
+
+
 -- MODEL
 
 
-buildModel : Model
-buildModel =
-    Model decodedInt decodeIntList (Report "none yet")
+buildModel : Maybe Report -> Model
+buildModel report =
+    case report of
+        Just r ->
+            Model decodedInt decodeIntList r
+
+        Nothing ->
+            Model decodedInt decodeIntList (Report "none")
 
 
 type alias Model =
@@ -95,17 +101,17 @@ type alias Report =
 
 
 type Msg
-    = Parsed (Result Http.Error String)
+    = Parsed (Result Http.Error Report)
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Parsed (Ok s) ->
-            ( buildModel, Cmd.none )
+        Parsed (Ok report) ->
+            ( buildModel (Just report), Cmd.none )
 
         Parsed (Err s) ->
-            ( buildModel, Cmd.none )
+            ( buildModel Nothing, Cmd.none )
 
 
 
