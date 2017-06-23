@@ -1,0 +1,16 @@
+{
+  "name": "elm-examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "elm": "^0.18.0",
+    "elm-format": "^0.7.0-exp"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
