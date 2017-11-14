@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Bouncing 1</title>
+  </head>
+  <body>
+    <canvas width="500" height="500" style="border: 1px solid red"></canvas>
+
+    <script>
+      class Box {
+        constructor(ctx) {
+          this.ctx = ctx;
+          this.topLimit = 10;
+          this.bottomLimit = 400;
+          this.leftLimit = 10;
+          this.rightLimit = 400;
+        }
+
+        render() {
+          this.ctx.rect(this.leftLimit, this.topLimit, this.rightLimit, this.bottomLimit);
+          this.ctx.stroke();
+        }
+
+        // object's origin is not the same as the box origin
+        nearToVerticalWall(object) {
+          return this.bottomLimit <= object.y || this.topLimit >= object.y - this.topLimit;
+        }
+
+        // object's origin is not the same as the box origin
+        nearToHorizontalWall(object) {
+          return this.rightLimit <= object.x || this.leftLimit >= object.x - this.leftLimit;
+        }
+
+        clear() {
+          this.ctx.clearRect(this.leftLimit, this.topLimit, this.rightLimit, this.bottomLimit);
+        }
+      }
+
+      class Ball {
+        constructor(ctx, {x, y, xDirection, yDirection, box}) {
+          this.ctx = ctx
+          this.x = x;
+          this.y = y;
+          this.r = 10;
+          this.increment = 20;
+          this.xDirectionIncrement = this.increment * xDirection;
+          this.yDirectionIncrement = this.increment * yDirection;
+          this.box = box;
+        }
+
+        render() {
+          if (box.nearToVerticalWall(this)) {
+            this.yDirectionIncrement *= -1;
+          }
+
+          if (box.nearToHorizontalWall(this)) {
+            this.xDirectionIncrement *= -1;
+          }
+
+         this.x += this.xDirectionIncrement;
+          this.y += this.yDirectionIncrement;
+
+          this.ctx.strokeStyle = 'black';
+          this.ctx.beginPath();
+          this.ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+          this.ctx.stroke();
+          this.ctx.fill();
+          this.ctx.closePath();
+        }
+      }
+
+      function frame(timestamp) {
+        if (!previousTimestamp) previousTimestamp = timestamp;
+
+        if (timestamp - previousTimestamp >= 200) {
+          box.clear();
+
+          balls.forEach(ball => {
+            ball.render();
+          });
+
+          previousTimestamp = timestamp;
+        }
+
+        requestAnimationFrame(frame);
+      }
+
+      // create objects
+      let canvas = document.querySelector("canvas");
+      let ctx = canvas.getContext("2d");
+      let box = new Box(ctx);
+      let balls = [ new Ball(ctx, {box, x: 100, y: 100, xDirection: -1, yDirection: 1 }) ];
+      let previousTimestamp = null;
+
+      // start animation
+      box.render();
+      requestAnimationFrame(frame);
+
+    </script>
+  </body>
+</html>
