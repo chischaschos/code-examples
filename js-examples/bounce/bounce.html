@@ -43,7 +43,7 @@
           this.x = x;
           this.y = y;
           this.r = 10;
-          this.increment = 20;
+          this.increment = 5;
           this.xDirectionIncrement = this.increment * xDirection;
           this.yDirectionIncrement = this.increment * yDirection;
           this.box = box;
@@ -73,7 +73,7 @@
       function frame(timestamp) {
         if (!previousTimestamp) previousTimestamp = timestamp;
 
-        if (timestamp - previousTimestamp >= 200) {
+        if (timestamp - previousTimestamp >= 16) {
           box.clear();
 
           balls.forEach(ball => {
