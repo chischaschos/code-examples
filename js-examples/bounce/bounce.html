@@ -90,7 +90,13 @@
       let canvas = document.querySelector("canvas");
       let ctx = canvas.getContext("2d");
       let box = new Box(ctx);
-      let balls = [ new Ball(ctx, {box, x: 100, y: 100, xDirection: -1, yDirection: 1 }) ];
+      let balls = [ new Ball(ctx, {
+        box,
+        x: Math.random() * (box.bottomLimit - box.topLimit) + box.topLimit,
+        y: Math.random() * (box.rightLimit - box.leftLimit) + box.leftLimit,
+        xDirection: [-1, 1][Math.round(Math.random())],
+        yDirection: [-1, 1][Math.round(Math.random())],
+      }) ];
       let previousTimestamp = null;
 
       // start animation
