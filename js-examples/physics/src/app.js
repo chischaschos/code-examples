@@ -1,3 +1,4 @@
-import('./app.scss')
+import './app.scss'
 
-require('./bounce.js')
+import startSimpleBounce from './simple-bounce'
+window.startSimpleBounce = startSimpleBounce
