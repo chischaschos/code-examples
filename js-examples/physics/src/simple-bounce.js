@@ -23,7 +23,7 @@ function frame(timestamp) {
   requestAnimationFrame(frame);
 }
 
-export default function startSimpleBounce() {
+export default function() {
   balls.push(new Ball(context, {
     box,
     x: Math.random() * (box.bottomLimit - box.topLimit) + box.topLimit,
